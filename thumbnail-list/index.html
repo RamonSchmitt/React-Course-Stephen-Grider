@@ -1,0 +1,72 @@
+<head>
+  <script src="https://unpkg.com/react@15.3.1/dist/react.js"></script>
+  <script src="https://unpkg.com/react-dom@15.3.1/dist/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5 target">
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/jsx">
+  // define a react component class
+  var Badge = React.createClass({
+    render: function() {
+      return <button className="btn btn-primary" type="button">
+        {this.props.title} <span className="badge">{this.props.number}</span>
+      </button>
+    }
+  });
+
+  var Thumbnail = React.createClass({
+    render: function() {
+      return <div className="thumbnail">
+        <img src={this.props.imageUrl}/>
+        <div className="caption">
+          <h3>{this.props.header}</h3>
+          <p>{this.props.description}</p>
+          <p>
+            <Badge title={this.props.title} number={this.props.number}/>
+          </p>
+        </div>
+      </div>
+    }
+  });
+
+  var ThumbnailList = React.createClass({
+    render: function() {
+      var list = this.props.thumbnailData.map(function(thumbnailProps) {
+        return <Thumbnail {...thumbnailProps}/>
+      });
+      return <div>
+        {list}
+      </div>
+    }
+  });
+
+  var options = {
+    thumbnailData: [{
+      title: 'See Tutorials',
+      number: 12,
+      header: 'Learn React',
+      description: 'React is a fantastic library for making fast, dynamicpages. React is a fantastic library for making fast, dynamicpages. React is a fantastic library for making fast, dynamicpages.',
+      imageUrl: 'https://worldvectorlogo.com/logos/react.svg'
+    },
+    {
+      title: 'See Tutorials',
+      number: 25,
+      header: 'Learn Gulp',
+      description: 'Gulp will speed up your development workflow. Gulp will speed up your development workflow. Gulp will speed up your development workflow. Gulp will speed up your development workflow.',
+      imageUrl: 'https://pbs.twimg.com/profile_images/417078109075034112/iruTC031_400x400.png'
+    }]
+  };
+
+  // ask react to render thius class
+  var element = React.createElement(ThumbnailList, options);
+  // when we ask react to render this class, we will tell it where to place the rendered element in the dom
+  ReactDOM.render(element, document.querySelector('.target'));
+</script>
